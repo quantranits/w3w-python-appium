@@ -5,6 +5,7 @@ from urllib.parse import urlparse
 import allure
 import pytest
 from appium.webdriver.appium_service import AppiumService
+from qase.pytest import qase
 
 from config.base_config import *
 from config.base_config import APPIUM_SERVER_URL, START_APPIUM_SERVER
@@ -38,13 +39,14 @@ def pytest_runtest_makereport(item, call):
     if rep.when == "call" and rep.failed and ENABLE_REPORT:
         drv = item.funcargs.get("driver")
         if drv is not None:
-            allure.attach(
-                drv.get_screenshot_as_png(), name="failure_screenshot", attachment_type=allure.attachment_type.PNG
-            )
+            screenshot = drv.get_screenshot_as_png()
+            allure.attach(screenshot, name="failure_screenshot", attachment_type=allure.attachment_type.PNG)
+            qase.attach((screenshot, "image/png", "failure_screenshot.png"))
+
             video_base64 = drv.stop_recording_screen()
-            allure.attach(
-                base64.b64decode(video_base64), name="failure_video", attachment_type=allure.attachment_type.MP4
-            )
+            video = base64.b64decode(video_base64)
+            allure.attach(video, name="failure_video", attachment_type=allure.attachment_type.MP4)
+            qase.attach((video, "video/mp4", "failure_video.mp4"))
 
 
 @pytest.fixture(autouse=True)
