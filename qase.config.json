@@ -1,5 +1,5 @@
 {
-  "mode": "off",
+  "mode": "on",
   "fallback": "report",
   "debug": false,
   "rootSuite": "what3words Mobile - Search",

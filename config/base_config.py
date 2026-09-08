@@ -18,7 +18,7 @@ ENVIRONMENT = environ.get("ENVIRONMENT", "staging")
 PLATFORM = environ.get("PLATFORM", "android").lower()
 APPIUM_SERVER_URL = environ.get("APPIUM_SERVER_URL", "http://127.0.0.1:4723")
 START_APPIUM_SERVER = environ.get("START_APPIUM_SERVER", "false").lower() == "true"
-ENABLE_REPORT = environ.get("ENABLE_REPORT", "false").lower() == "true"
+ENABLE_REPORT = environ.get("ENABLE_REPORT", "true").lower() == "true"
 
 DEVICE_NAME = environ.get("DEVICE_NAME")
 PLATFORM_VERSION = environ.get("PLATFORM_VERSION")

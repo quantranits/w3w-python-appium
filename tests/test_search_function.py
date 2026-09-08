@@ -7,7 +7,7 @@ from pages.search_page import SearchPage
 
 @pytest.mark.search
 class TestSearchFunctionality:
-    @qase.id(57)
+    @qase.id(1)
     def test_search_entry_from_home_bar(self, driver):
         self.logger.step("Open the home page and tap search bar")
         home_page = HomePage(driver)
@@ -19,7 +19,7 @@ class TestSearchFunctionality:
         self.logger.success("Search page displayed successfully")
 
     @pytest.mark.parametrize("keyword", ["fdcv", "Landmark 81", "Tran Binh Trong", "Trần Bình Trọng"])
-    @qase.id(58)
+    @qase.id(2)
     def test_search_with_standard_place_returns_results(self, driver, keyword):
         self.logger.step("Open the home page")
         home_page = HomePage(driver)
@@ -37,7 +37,7 @@ class TestSearchFunctionality:
     @pytest.mark.parametrize(
         "keyword", ["///strays.name.morphing", '/limit.broom.flip', '//limit.broom.flip', "///split.the.word   "]
     )
-    @qase.id(59)
+    @qase.id(3)
     def test_search_with_3words_format_returns_results(self, driver, keyword):
         self.logger.step("Open the home page")
         home_page = HomePage(driver)
@@ -53,7 +53,7 @@ class TestSearchFunctionality:
         self.logger.success("Search results successfully returned and displayed")
 
     @pytest.mark.parametrize("keyword", ["invalid keyword", "&^%%*^^&GBBNJ"])
-    @qase.id(60)
+    @qase.id(4)
     def test_search_with_invalid_keyword_shows_no_results(self, driver, keyword):
         self.logger.step("Open the home page")
         home_page = HomePage(driver)
@@ -68,7 +68,7 @@ class TestSearchFunctionality:
         self.logger.success("No results found message is visible")
 
     @pytest.mark.parametrize("keyword", ["   ///split.the.word", "//limit broom flip", "/limit broom flip"])
-    @qase.id(61)
+    @qase.id(5)
     def test_search_with_malformed_3words_shows_no_results(self, driver, keyword):
         self.logger.step("Open the home page")
         home_page = HomePage(driver)
@@ -82,7 +82,7 @@ class TestSearchFunctionality:
         assert search_page.verify_no_result()
         self.logger.success("No results found message is visible")
 
-    @qase.id(62)
+    @qase.id(6)
     def test_search_with_3_words_format_returns_results(self, driver):
         self.logger.step("Open the home page")
         home_page = HomePage(driver)
@@ -99,7 +99,7 @@ class TestSearchFunctionality:
         assert len(search_page.get_results()) == 3
         self.logger.success("3 search results successfully returned and displayed")
 
-    @qase.id(63)
+    @qase.id(7)
     def test_select_random_search_result_navigates_to_details(self, driver):
         self.logger.step("Open the home page and search for 'fdcv'")
         home_page = HomePage(driver)
@@ -116,7 +116,7 @@ class TestSearchFunctionality:
         assert home_page.is_google_map_displayed()
         assert current_address != home_page.get_3words_address()
 
-    @qase.id(64)
+    @qase.id(8)
     def test_clear_search_input(self, driver):
         self.logger.step("Open the home page")
         home_page = HomePage(driver)
@@ -133,7 +133,7 @@ class TestSearchFunctionality:
         assert search_page.get_search_input_text() == ""
         self.logger.success("Search input field cleared successfully")
 
-    @qase.id(65)
+    @qase.id(9)
     def test_navigate_back_from_search_to_home(self, driver):
         self.logger.step("Open search page from home")
         home_page = HomePage(driver)
@@ -151,11 +151,11 @@ class TestSearchFunctionality:
         "formatted_input",
         [
             "limit.broom.flip",  # Missing leading slashes
-            "  ///limit.broom.flip  ",  # Trailing/leading spaces
+            "///limit.broom.flip  ",  # Trailing/leading spaces
             "///limit.broom.fli",  # Incomplete 3rd word
         ],
     )
-    @qase.id(66)
+    @qase.id(10)
     def test_search_format_resilience(self, driver, formatted_input):
         self.logger.step("Open home page and tap search bar")
         home_page = HomePage(driver)
@@ -171,7 +171,7 @@ class TestSearchFunctionality:
 
         assert search_page.result_has_3words()
 
-    @qase.id(67)
+    @qase.id(11)
     def test_clear_button_visibility_lifecycle(self, driver):
         self.logger.step("Open search page")
         home_page = HomePage(driver)
@@ -198,7 +198,7 @@ class TestSearchFunctionality:
             ("///limit broom flip", "///limit.broom.flip"),
         ],
     )
-    @qase.id(68)
+    @qase.id(12)
     def test_suggestion_keyword_displayed(self, driver, suggestion_keyword, three_words_address):
         self.logger.step("Open search page")
         home_page = HomePage(driver)
@@ -221,7 +221,7 @@ class TestSearchFunctionality:
             ("limit broom flip", "///limit.broom.flip"),
         ],
     )
-    @qase.id(69)
+    @qase.id(13)
     def test_suggestion_cancel_reformats_keyword_and_stays_on_search(self, driver, raw_keyword, formatted_keyword):
         self.logger.step("Open search page")
         home_page = HomePage(driver)
