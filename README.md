@@ -18,6 +18,7 @@ but not implemented/verified for this test.
 ```
 config/       - base_config.py (env vars, `from config.base_config import *`), capabilities.json
                 (per-platform Appium caps), devices_config.json + device_resolver.py (--device selection)
+conftest.py   - loads .env before third-party pytest reporters are configured
 core/         - base_page.py (BasePage with wait/interaction helpers), driver_factory.py
 pages/        - Page Object Models, one subfolder per feature/app area
 tests/        - pytest tests + conftest.py (driver fixture)
@@ -142,3 +143,74 @@ uv run pytest
 allure serve reports/allure-results          # opens an interactive report in the browser
 # or: allure generate reports/allure-results -o reports/allure-report --clean
 ```
+
+## Qase TestOps integration
+
+The official `qase-pytest` reporter is installed and configured in `qase.config.json`.
+Qase reporting is `off` by default, so ordinary local runs do not publish results.
+When Qase is enabled, pytest results, captured logs, durations, parameters, and failure
+details are sent to a Qase automated run. If `ENABLE_REPORT=true`, failed tests also attach
+their Appium screenshot and screen recording to both Qase and Allure.
+
+### One-time Qase setup
+
+1. Create or select the Qase project that will hold both manual and automated cases, and
+   note its project code (for example, `W3W`).
+2. In the Qase workspace Apps page, activate the Pytest app and create an access token.
+3. The current search tests are already linked to Qase cases `DEMO-57` through `DEMO-69`.
+   Enable **Auto create test cases** in Qase only if future tests without `@qase.id(...)`
+   should be added automatically.
+4. Put the connection values in the ignored `.env` file (or the CI secret store):
+
+```dotenv
+QASE_MODE=testops
+QASE_TESTOPS_PROJECT=W3W
+QASE_TESTOPS_API_TOKEN=replace-with-your-token
+```
+
+Never put `QASE_TESTOPS_API_TOKEN` in `qase.config.json` or commit it to Git.
+
+### Publish a test run
+
+```bash
+uv run pytest
+uv run pytest -m search
+```
+
+The reporter creates and completes a Qase run automatically. Use environment overrides to
+give a CI run a useful name or append results to a Qase run created elsewhere:
+
+```bash
+QASE_TESTOPS_RUN_TITLE="Android regression - build 123" uv run pytest
+QASE_TESTOPS_RUN_ID=123 uv run pytest
+```
+
+If the Qase API cannot be reached, `fallback: report` writes a local JSON report under
+`reports/qase/` instead of discarding the results.
+
+### Test inventory and stable links
+
+The `what3words Mobile - Search` suite contains 13 automated Qase cases, linked one-to-one
+with the 13 pytest functions. Pytest collects 26 executions after expanding the parameter
+sets. Check the executable count at any time with:
+
+```bash
+uv run pytest --collect-only -q
+```
+
+Qase reports each parameter combination against its linked case, including the parameter
+values. Keep the numeric Qase case ID on each test to preserve history across test renames
+and file moves:
+
+```python
+from qase.pytest import qase
+
+
+@qase.id(123)
+def test_example(driver):
+    assert driver is not None
+```
+
+Use Qase dashboard widgets **Test Cases Count**, **Test Cases Automation Ratio**, and
+**Test Case Property Distribution** grouped by Automation to visualize total and automated
+coverage. Each Qase run dashboard visualizes passed, failed, skipped, and invalid results.

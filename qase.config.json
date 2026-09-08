@@ -1,0 +1,27 @@
+{
+  "mode": "off",
+  "fallback": "report",
+  "debug": false,
+  "rootSuite": "what3words Mobile - Search",
+  "testops": {
+    "run": {
+      "title": "what3words Appium automated run",
+      "complete": true
+    },
+    "batch": {
+      "size": 200
+    }
+  },
+  "report": {
+    "driver": "local",
+    "connection": {
+      "path": "reports/qase",
+      "format": "json"
+    }
+  },
+  "framework": {
+    "pytest": {
+      "captureLogs": true
+    }
+  }
+}

@@ -10,6 +10,7 @@ dependencies = [
     "python-dotenv>=1.0.0",
     "faker>=33.1.0",
     "allure-pytest>=2.13.0",
+    "qase-pytest>=9.0.0,<10.0.0",
 ]
 
 [project.optional-dependencies]
@@ -39,6 +40,7 @@ addopts = "--alluredir=reports/allure-results --clean-alluredir"
 markers = [
     "android: Android-only test",
     "ios: iOS-only test",
+    "search: search functionality test",
     "smoke: smoke test",
     "regression: regression test",
 ]
