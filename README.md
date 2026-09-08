@@ -157,7 +157,7 @@ their Appium screenshot and screen recording to both Qase and Allure.
 1. Create or select the Qase project that will hold both manual and automated cases, and
    note its project code (for example, `W3W`).
 2. In the Qase workspace Apps page, activate the Pytest app and create an access token.
-3. The current search tests are already linked to Qase cases `DEMO-57` through `DEMO-69`.
+3. The current search tests are already linked to Qase cases `W3W-1` through `W3W-13`.
    Enable **Auto create test cases** in Qase only if future tests without `@qase.id(...)`
    should be added automatically.
 4. Put the connection values in the ignored `.env` file (or the CI secret store):
