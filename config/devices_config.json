@@ -1,0 +1,22 @@
+{
+  "mobile_devices": {
+    "local_android": {
+      "runMode": "local",
+      "platformName": "Android"
+    },
+    "local_ios": {
+      "runMode": "local",
+      "platformName": "iOS"
+    },
+    "cloud_android": {
+      "runMode": "cloud",
+      "cloudProvider": "browserstack",
+      "platformName": "Android"
+    },
+    "cloud_ios": {
+      "runMode": "cloud",
+      "cloudProvider": "browserstack",
+      "platformName": "iOS"
+    }
+  }
+}

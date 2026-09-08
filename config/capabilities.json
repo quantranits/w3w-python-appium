@@ -1,0 +1,25 @@
+{
+  "android": {
+    "appium:automationName": "UiAutomator2",
+    "platformName": "Android",
+    "appium:deviceName": "Android Emulator",
+    "appium:platformVersion": "",
+    "appium:app": "",
+    "appium:appPackage": "",
+    "appium:appActivity": "",
+    "appium:noReset": false,
+    "appium:newCommandTimeout": 300,
+    "appium:autoGrantPermissions": true
+  },
+  "ios": {
+    "appium:automationName": "XCUITest",
+    "platformName": "iOS",
+    "appium:deviceName": "iPhone 15",
+    "appium:platformVersion": "",
+    "appium:app": "",
+    "appium:bundleId": "",
+    "appium:noReset": false,
+    "appium:newCommandTimeout": 300,
+    "appium:autoGrantPermissions": true
+  }
+}

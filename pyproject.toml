@@ -1,0 +1,52 @@
+[project]
+name = "python-appium"
+version = "0.1.0"
+description = "Mobile automation framework using Appium + Python + pytest"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "Appium-Python-Client>=4.5.0",
+    "selenium>=4.25.0",
+    "pytest>=8.3.0",
+    "python-dotenv>=1.0.0",
+    "faker>=33.1.0",
+    "allure-pytest>=2.13.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.7.0",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I"]
+ignore = ["E501", "F401", "F841", "F403", "F405"]
+
+[tool.ruff.format]
+quote-style = "preserve"
+
+[tool.ruff.lint.isort]
+known-first-party = ["core", "pages", "config", "utils", "tests"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "--alluredir=reports/allure-results --clean-alluredir"
+markers = [
+    "android: Android-only test",
+    "ios: iOS-only test",
+    "smoke: smoke test",
+    "regression: regression test",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["core*", "pages*", "config*", "utils*"]
